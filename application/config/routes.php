@@ -58,3 +58,5 @@ $route['admin/stok-beku'] = 'stock/frozen';
 $route['admin/riwayat-stok'] = 'stock/history';
 $route['cashier/open'] = 'cashier/open_stand';
 $route['cashier/process-open'] = 'cashier/process_open_stand';
+$route['admin/pengeluaran'] = 'finance/expenses';
+$route['admin/tambah-pengeluaran'] = 'finance/add_expense';

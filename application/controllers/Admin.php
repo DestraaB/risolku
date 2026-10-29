@@ -5,23 +5,43 @@ class Admin extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        
-        // Proteksi: Cek apakah user sudah login dan rolenya admin
         if (!$this->session->userdata('user_id') || $this->session->userdata('role') !== 'admin') {
-            $this->session->set_flashdata('error', 'Anda harus login sebagai Admin untuk mengakses halaman ini.');
             redirect('login');
         }
+        // Load semua model yang dibutuhkan dashboard
+        $this->load->model('Finance_model');
+        $this->load->model('Stand_model');
     }
 
     public function dashboard() {
         $data['title'] = 'Dashboard Admin - RisolKu';
         
-        // Karena ini masih awal, kita siapkan variabel data bernilai 0
-        // Nanti di Tahap Keuangan, data ini akan diambil dari database (Model)
-        $data['penjualan_hari_ini'] = 0;
-        $data['risol_terjual'] = 0;
-        $data['stok_beku'] = 0;
-        $data['stok_stand'] = 0;
+        // 1. Data Ringkasan Atas
+        $data['penjualan_hari_ini'] = $this->Finance_model->get_today_sales();
+        $data['risol_terjual'] = $this->Finance_model->get_today_sold_items();
+        
+        $this->db->select_sum('stock_frozen');
+        $data['stok_beku'] = $this->db->get('products')->row()->stock_frozen ?? 0;
+
+        $this->db->select_sum('stand_stock.quantity_remaining');
+        $this->db->join('stand_sessions', 'stand_sessions.id = stand_stock.stand_session_id');
+        $this->db->where('stand_sessions.status', 'open');
+        $data['stok_stand'] = $this->db->get('stand_stock')->row()->quantity_remaining ?? 0;
+
+        // 2. Data Keuangan Hari Ini
+        $data['pengeluaran_hari_ini'] = $this->Finance_model->get_today_expenses();
+        $data['bersih_hari_ini'] = $data['penjualan_hari_ini'] - $data['pengeluaran_hari_ini'];
+
+        // 3. Data Stand yang sedang buka hari ini
+        $this->db->select('stand_sessions.*, users.name as cashier_name');
+        $this->db->join('users', 'users.id = stand_sessions.user_id');
+        $this->db->where('stand_sessions.status', 'open');
+        $data['active_stands'] = $this->db->get('stand_sessions')->result_array();
+        
+        // Sisipkan ringkasan stok untuk masing-masing stand
+        foreach($data['active_stands'] as $key => $stand) {
+            $data['active_stands'][$key]['summary'] = $this->Stand_model->get_session_summary($stand['id']);
+        }
         
         $this->load->view('templates/header', $data);
         $this->load->view('templates/navbar');
