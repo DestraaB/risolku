@@ -66,3 +66,4 @@ $route['checkout/success/(:any)'] = 'checkout/success/$1';
 $route['admin/orders'] = 'orders/index';
 $route['admin/orders/detail/(:num)'] = 'orders/detail/$1';
 $route['admin/orders/update/(:num)'] = 'orders/update_status/$1';
+$route['admin/laporan'] = 'reports/index';

@@ -65,7 +65,8 @@
                 <i class="fas fa-shopping-bag fa-fw me-2"></i> Pesanan Online
             </a>
             
-            <a href="#" class="list-group-item list-group-item-action py-3 fw-semibold border-0 text-secondary">
+            <!-- Ubah baris menu Laporan sebelumnya dengan ini -->
+            <a href="<?= base_url('admin/laporan'); ?>" class="list-group-item list-group-item-action py-3 fw-semibold border-0 <?= ($this->uri->segment(2) == 'laporan') ? 'bg-light text-warning-emphasis border-start border-4 border-warning' : 'text-secondary'; ?>">
                 <i class="fas fa-chart-line fa-fw me-2"></i> Laporan
             </a>
 
