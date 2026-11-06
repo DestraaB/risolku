@@ -70,7 +70,8 @@
                 <i class="fas fa-chart-line fa-fw me-2"></i> Laporan
             </a>
 
-            <a href="#" class="list-group-item list-group-item-action py-3 fw-semibold border-0 text-secondary">
+            <!-- Ubah baris menu Kelola Kasir menjadi ini -->
+            <a href="<?= base_url('admin/kasir'); ?>" class="list-group-item list-group-item-action py-3 fw-semibold border-0 <?= ($this->uri->segment(2) == 'kasir') ? 'bg-light text-warning-emphasis border-start border-4 border-warning' : 'text-secondary'; ?>">
                 <i class="fas fa-users fa-fw me-2"></i> Kelola Kasir
             </a>
 

@@ -67,3 +67,6 @@ $route['admin/orders'] = 'orders/index';
 $route['admin/orders/detail/(:num)'] = 'orders/detail/$1';
 $route['admin/orders/update/(:num)'] = 'orders/update_status/$1';
 $route['admin/laporan'] = 'reports/index';
+$route['admin/kasir'] = 'users/cashiers';
+$route['admin/kasir/add'] = 'users/add_cashier';
+$route['admin/kasir/toggle/(:num)'] = 'users/toggle_status/$1';
