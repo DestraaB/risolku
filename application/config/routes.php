@@ -70,3 +70,4 @@ $route['admin/laporan'] = 'reports/index';
 $route['admin/kasir'] = 'users/cashiers';
 $route['admin/kasir/add'] = 'users/add_cashier';
 $route['admin/kasir/toggle/(:num)'] = 'users/toggle_status/$1';
+$route['admin/stok-stand'] = 'stock/stand';

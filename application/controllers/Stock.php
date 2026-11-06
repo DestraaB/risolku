@@ -8,7 +8,9 @@ class Stock extends CI_Controller {
         if (!$this->session->userdata('user_id') || $this->session->userdata('role') !== 'admin') {
             redirect('login');
         }
+        // Pastikan kedua model ini dimuat
         $this->load->model('Stock_model');
+        $this->load->model('Stand_model'); 
     }
 
     public function frozen() {
@@ -33,7 +35,7 @@ class Stock extends CI_Controller {
                 $this->session->set_flashdata('error', 'Gagal menambahkan stok. Silakan coba lagi.');
             }
         }
-        redirect('stock/frozen');
+        redirect('admin/stok-beku');
     }
 
     public function history() {
@@ -43,6 +45,26 @@ class Stock extends CI_Controller {
         $this->load->view('templates/header', $data);
         $this->load->view('templates/navbar');
         $this->load->view('admin/stock/history', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function stand() {
+        $data['title'] = 'Stok Stand - RisolKu';
+        
+        // Ambil semua sesi stand yang sedang 'open'
+        $this->db->select('stand_sessions.*, users.name as cashier_name');
+        $this->db->join('users', 'users.id = stand_sessions.user_id');
+        $this->db->where('stand_sessions.status', 'open');
+        $data['active_stands'] = $this->db->get('stand_sessions')->result_array();
+
+        // Ambil detail stok untuk masing-masing stand
+        foreach($data['active_stands'] as $key => $stand) {
+            $data['active_stands'][$key]['stock'] = $this->Stand_model->get_active_stand_stock($stand['id']);
+        }
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/navbar');
+        $this->load->view('admin/stock/stand', $data);
         $this->load->view('templates/footer');
     }
 }

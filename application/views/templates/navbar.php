@@ -44,18 +44,20 @@
             <div class="collapse <?= ($this->uri->segment(2) == 'stok-beku' || $this->uri->segment(2) == 'riwayat-stok') ? 'show' : ''; ?>" id="menuStok">
                 <div class="bg-light ps-4 py-2">
                     <a href="<?= base_url('admin/stok-beku'); ?>" class="list-group-item list-group-item-action border-0 bg-transparent py-2 <?= ($this->uri->segment(2) == 'stok-beku') ? 'text-warning-emphasis fw-bold' : 'text-secondary'; ?>">Stok Beku</a>
-                    <a href="#" class="list-group-item list-group-item-action border-0 bg-transparent py-2 text-secondary">Stok Stand</a>
+                    <a href="<?= base_url('admin/stok-stand'); ?>" class="list-group-item list-group-item-action border-0 bg-transparent py-2 <?= ($this->uri->segment(2) == 'stok-stand') ? 'text-warning-emphasis fw-bold' : 'text-secondary'; ?>">Stok Stand</a>
                     <a href="<?= base_url('admin/riwayat-stok'); ?>" class="list-group-item list-group-item-action border-0 bg-transparent py-2 <?= ($this->uri->segment(2) == 'riwayat-stok') ? 'text-warning-emphasis fw-bold' : 'text-secondary'; ?>">Riwayat Stok</a>
                 </div>
             </div>
             
-            <!-- Timpa menu Keuangan sebelumnya dengan ini -->
+            <!-- MENU KEUANGAN -->
             <a href="#menuKeuangan" data-bs-toggle="collapse" class="list-group-item list-group-item-action py-3 fw-semibold border-0 text-secondary">
                 <i class="fas fa-wallet fa-fw me-2"></i> Keuangan <i class="fas fa-chevron-down float-end mt-1" style="font-size: 0.8rem;"></i>
             </a>
             <div class="collapse <?= ($this->uri->segment(2) == 'pengeluaran') ? 'show' : ''; ?>" id="menuKeuangan">
                 <div class="bg-light ps-4 py-2">
-                    <a href="#" class="list-group-item list-group-item-action border-0 bg-transparent py-2 text-secondary">Pemasukan</a>
+                    <!-- Pemasukan otomatis dari Penjualan, arahkan ke laporan -->
+                    <a href="<?= base_url('admin/laporan'); ?>" class="list-group-item list-group-item-action border-0 bg-transparent py-2 text-secondary">Pemasukan (Laporan)</a>
+                    
                     <a href="<?= base_url('admin/pengeluaran'); ?>" class="list-group-item list-group-item-action border-0 bg-transparent py-2 <?= ($this->uri->segment(2) == 'pengeluaran') ? 'text-warning-emphasis fw-bold' : 'text-secondary'; ?>">Pengeluaran</a>
                 </div>
             </div>
