@@ -49,9 +49,16 @@
                 </div>
             </div>
             
-            <a href="#" class="list-group-item list-group-item-action py-3 fw-semibold border-0 text-secondary">
-                <i class="fas fa-wallet fa-fw me-2"></i> Keuangan
+            <!-- Timpa menu Keuangan sebelumnya dengan ini -->
+            <a href="#menuKeuangan" data-bs-toggle="collapse" class="list-group-item list-group-item-action py-3 fw-semibold border-0 text-secondary">
+                <i class="fas fa-wallet fa-fw me-2"></i> Keuangan <i class="fas fa-chevron-down float-end mt-1" style="font-size: 0.8rem;"></i>
             </a>
+            <div class="collapse <?= ($this->uri->segment(2) == 'pengeluaran') ? 'show' : ''; ?>" id="menuKeuangan">
+                <div class="bg-light ps-4 py-2">
+                    <a href="#" class="list-group-item list-group-item-action border-0 bg-transparent py-2 text-secondary">Pemasukan</a>
+                    <a href="<?= base_url('admin/pengeluaran'); ?>" class="list-group-item list-group-item-action border-0 bg-transparent py-2 <?= ($this->uri->segment(2) == 'pengeluaran') ? 'text-warning-emphasis fw-bold' : 'text-secondary'; ?>">Pengeluaran</a>
+                </div>
+            </div>
 
             <a href="#" class="list-group-item list-group-item-action py-3 fw-semibold border-0 text-secondary">
                 <i class="fas fa-shopping-bag fa-fw me-2"></i> Pesanan Online
