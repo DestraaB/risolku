@@ -63,3 +63,6 @@ $route['admin/tambah-pengeluaran'] = 'finance/add_expense';
 $route['checkout'] = 'checkout/index';
 $route['checkout/process'] = 'checkout/process';
 $route['checkout/success/(:any)'] = 'checkout/success/$1';
+$route['admin/orders'] = 'orders/index';
+$route['admin/orders/detail/(:num)'] = 'orders/detail/$1';
+$route['admin/orders/update/(:num)'] = 'orders/update_status/$1';

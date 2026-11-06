@@ -60,7 +60,8 @@
                 </div>
             </div>
 
-            <a href="#" class="list-group-item list-group-item-action py-3 fw-semibold border-0 text-secondary">
+            <!-- Ubah baris menu Pesanan Online menjadi ini -->
+            <a href="<?= base_url('admin/orders'); ?>" class="list-group-item list-group-item-action py-3 fw-semibold border-0 <?= ($this->uri->segment(2) == 'orders') ? 'bg-light text-warning-emphasis border-start border-4 border-warning' : 'text-secondary'; ?>">
                 <i class="fas fa-shopping-bag fa-fw me-2"></i> Pesanan Online
             </a>
             
