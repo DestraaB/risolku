@@ -60,3 +60,6 @@ $route['cashier/open'] = 'cashier/open_stand';
 $route['cashier/process-open'] = 'cashier/process_open_stand';
 $route['admin/pengeluaran'] = 'finance/expenses';
 $route['admin/tambah-pengeluaran'] = 'finance/add_expense';
+$route['checkout'] = 'checkout/index';
+$route['checkout/process'] = 'checkout/process';
+$route['checkout/success/(:any)'] = 'checkout/success/$1';

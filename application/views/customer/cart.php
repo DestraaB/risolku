@@ -47,7 +47,8 @@
             </div>
         </div>
 
-        <a href="#" class="btn btn-brand btn-lg rounded-pill fw-bold w-100 shadow-sm shadow">
+        <!-- Timpa tag <a> Lanjut Checkout sebelumnya dengan ini -->
+        <a href="<?= base_url('checkout'); ?>" class="btn btn-brand btn-lg rounded-pill fw-bold w-100 shadow-sm shadow">
             Lanjut Checkout <i class="fas fa-arrow-right ms-2"></i>
         </a>
 
