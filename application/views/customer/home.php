@@ -32,6 +32,30 @@
 
                     <div class="card-body p-2 d-flex flex-column">
                         <h6 class="fw-bold mb-1 lh-sm" style="font-size: 0.9rem;"><?= $p['name']; ?></h6>
+                        <!-- Tambahkan ini di bawah <h6 class="fw-bold mb-3...">Menu Favorit</h6> -->
+                    <?php if ($this->session->flashdata('success')): ?>
+                        <div class="alert alert-success alert-dismissible fade show border-0 rounded-pill py-2 shadow-sm fs-6" role="alert">
+                            <i class="fas fa-check-circle me-1"></i> <?= $this->session->flashdata('success'); ?>
+                            <button type="button" class="btn-close pb-2 pt-3" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- ... Kode grid produk lainnya tetap sama, HINGGA bagian bawah ini ... -->
+
+                    <!-- CARI BAGIAN INI LALU TIMPA: (Harga dan Tombol Tambah di dalam looping foreach) -->
+                    <form action="<?= base_url('cart/add'); ?>" method="post" class="mt-auto d-flex justify-content-between align-items-end">
+                        <input type="hidden" name="id" value="<?= $p['id']; ?>">
+                        <input type="hidden" name="price" value="<?= $p['price']; ?>">
+                        <input type="hidden" name="name" value="<?= $p['name']; ?>">
+                        <input type="hidden" name="variant" value="<?= $p['variant']; ?>">
+                        <input type="hidden" name="is_spicy" value="<?= $p['is_spicy']; ?>">
+
+                        <span class="fw-bold text-dark" style="font-size: 0.85rem;">Rp<?= number_format($p['price'], 0, ',', '.'); ?></span>
+                        
+                        <button type="submit" class="btn btn-sm <?= $p['stock_frozen'] > 0 ? 'btn-brand' : 'btn-secondary disabled'; ?> rounded-circle shadow-sm" style="width: 30px; height: 30px; padding: 0;" <?= $p['stock_frozen'] < 1 ? 'disabled' : ''; ?>>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </form>
                         
                         <!-- Indikator Pedas / Varian -->
                         <div class="mb-2">

@@ -6,13 +6,16 @@
             <small class="fw-bold" style="font-size: 0.7rem;">Menu</small>
         </a>
         
-        <a href="#" class="text-decoration-none text-center text-muted position-relative">
+        <!-- Ubah Menu Keranjang menjadi ini -->
+        <a href="<?= base_url('cart'); ?>" class="text-decoration-none text-center <?= ($this->uri->segment(1) == 'cart') ? 'brand-color' : 'text-muted'; ?> position-relative">
             <i class="fas fa-shopping-basket fs-4 d-block mb-1"></i>
             <small class="fw-bold" style="font-size: 0.7rem;">Keranjang</small>
-            <!-- Badge Notifikasi Keranjang (Nanti dibuat dinamis di Tahap 9) -->
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                0
-            </span>
+            
+            <?php if($this->cart->total_items() > 0): ?>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                    <?= $this->cart->total_items(); ?>
+                </span>
+            <?php endif; ?>
         </a>
         
         <a href="#" class="text-decoration-none text-center text-muted">
