@@ -71,4 +71,27 @@ class Cashier extends CI_Controller {
         $this->load->view('templates/cashier_nav');
         $this->load->view('templates/footer');
     }
+    public function process_sale() {
+        $items = $this->input->post('items');
+        $total_amount = $this->input->post('total_amount');
+        
+        if (empty($items)) {
+            $this->session->set_flashdata('error', 'Keranjang masih kosong!');
+            redirect('cashier/sales');
+        }
+
+        $user_id = $this->session->userdata('user_id');
+        $this->load->model('Stand_model');
+        $active_session = $this->Stand_model->get_active_session($user_id);
+        
+        if ($active_session) {
+            $this->load->model('Sale_model');
+            $this->Sale_model->process_sale($active_session['id'], $items, $total_amount);
+            $this->session->set_flashdata('success', '✓ Pembayaran berhasil dicatat!');
+        } else {
+            $this->session->set_flashdata('error', 'Sesi stand tidak ditemukan!');
+        }
+        
+        redirect('cashier/sales');
+    }
 }
