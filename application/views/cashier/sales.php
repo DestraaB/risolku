@@ -24,12 +24,13 @@
                 <div class="card-body">
                     <h6 class="fw-bold mb-3"><i class="fas fa-box-open text-warning me-2"></i> Stok di Stand</h6>
                     <div class="row g-3">
+                        <!-- Pastikan bagian kartu stok stand di sales.php bentuknya seperti ini: -->
                         <?php foreach ($stand_stock as $item): ?>
                             <div class="col-6 col-md-4">
                                 <div class="card h-100 border-light bg-light rounded-4 text-center p-3" 
-                                     style="cursor: pointer; transition: 0.2s;"
-                                     onclick="addToCart(<?= $item['product_id']; ?>, '<?= $item['name']; ?>', '<?= $item['variant']; ?>', <?= $item['price']; ?>, <?= $item['quantity_remaining']; ?>)"
-                                     onmouseover="this.classList.add('shadow-sm')" onmouseout="this.classList.remove('shadow-sm')">
+                                    style="cursor: pointer; transition: 0.2s;"
+                                    onclick="addToCart(<?= $item['product_id']; ?>, '<?= $item['name']; ?>', '<?= $item['variant']; ?>', <?= $item['price']; ?>, <?= $item['quantity_remaining']; ?>)">
+                                    
                                     <div class="mb-2">
                                         <span class="badge <?= $item['is_spicy'] ? 'bg-danger' : 'bg-success'; ?> bg-opacity-10 <?= $item['is_spicy'] ? 'text-danger' : 'text-success'; ?>">
                                             <?= $item['is_spicy'] ? '🌶 ' : ''; ?><?= $item['variant']; ?>
