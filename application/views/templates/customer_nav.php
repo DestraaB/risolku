@@ -18,7 +18,7 @@
             <?php endif; ?>
         </a>
         
-        <a href="#" class="text-decoration-none text-center text-muted">
+        <a href="<?=base_url('track'); ?>" class="text-decoration-none text-center text-muted">
             <i class="fas fa-receipt fs-4 d-block mb-1"></i>
             <small class="fw-bold" style="font-size: 0.7rem;">Pesanan</small>
         </a>

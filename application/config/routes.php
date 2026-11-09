@@ -72,3 +72,4 @@ $route['admin/kasir/add'] = 'users/add_cashier';
 $route['admin/kasir/toggle/(:num)'] = 'users/toggle_status/$1';
 $route['admin/stok-stand'] = 'stock/stand';
 $route['cashier/process_sale'] = 'cashier/process_sale';
+$route['track'] = 'track/index';
