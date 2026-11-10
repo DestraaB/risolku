@@ -1,7 +1,9 @@
 <div class="container-fluid py-4 px-3">
     <div class="d-flex align-items-center justify-content-between mb-4">
         <h4 class="fw-bold mb-0">Kasir: Jualan</h4>
-        <a href="<?= base_url('cashier'); ?>" class="btn btn-light rounded-pill"><i class="fas fa-arrow-left"></i> Kembali</a>
+        <a href="<?= base_url('cashier'); ?>" class="btn btn-light rounded-pill position-relative" style="z-index: 1050;">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
     </div>
     
     <?php if ($this->session->flashdata('success')): ?>

@@ -1,3 +1,29 @@
+<style>
+    /* Pengaturan Khusus Layar PC/Laptop */
+    @media (min-width: 992px) {
+        #adminSidebar {
+            transform: translateX(0) !important;
+            visibility: visible !important;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            height: 100vh !important;
+            width: 280px !important;
+            z-index: 1040;
+            border-right: 1px solid #dee2e6;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
+        }
+        .offcanvas-header .btn-close {
+            display: none !important; /* Sembunyikan tombol (X) di PC */
+        }
+        .navbar-toggler {
+            display: none !important; /* Sembunyikan tombol hamburger di PC */
+        }
+        body {
+            padding-left: 280px !important; /* Geser konten utama ke kanan agar tidak tertimpa sidebar */
+        }
+    }
+</style>
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
     <div class="container-fluid px-3">

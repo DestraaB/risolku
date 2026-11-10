@@ -36,6 +36,10 @@
                                     <i class="fab fa-whatsapp me-1"></i> <?= $k['phone'] ?: '-'; ?>
                                 </div>
                             </div>
+                            <div class="text-primary mt-1" style="font-size: 0.8rem;">
+                                        <i class="fas fa-map-marker-alt me-1"></i> 
+                                        <?= !empty($k['stand_location']) ? $k['stand_location'] : 'Lokasi belum diatur'; ?>
+                            </div>
                         </div>
                         
                         <!-- Tombol Toggle Status -->
@@ -74,8 +78,12 @@
                         <input type="text" name="password" class="form-control" placeholder="Minimal 6 karakter" required autocomplete="off">
                         <small class="text-muted mt-1 d-block">Saran: Gunakan kombinasi yang mudah diingat kasir.</small>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Lokasi Stand / Cabang <span class="text-danger">*</span></label>
+                        <input type="text" name="stand_location" class="form-control" placeholder="Contoh: Cabang Alun-Alun Selatan" required>
+                    </div>
                 </div>
-                <div class="modal-footer border-top-0 pt-0">
+                <div class="modalb-footer border-top-0 pt-0">
                     <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary-custom rounded-pill px-4 fw-bold">Simpan Akun</button>
                 </div>

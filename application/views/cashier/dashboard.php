@@ -1,5 +1,10 @@
 <div class="container-fluid py-4 px-3">
     <h3 class="fw-bold mb-1">Halo, <?= $this->session->userdata('name'); ?> 👋</h3>
+    
+    <!-- INFO LOKASI STAND DARI ADMIN -->
+    <p class="text-primary fw-bold mb-1" style="font-size: 0.9rem;">
+        <i class="fas fa-map-marker-alt me-1"></i> Lokasi: <?= $this->session->userdata('stand_location') ? $this->session->userdata('stand_location') : 'Belum diatur Admin'; ?>
+    </p>
     <p class="text-muted mb-4">Siap untuk berjualan hari ini?</p>
 
     <?php if ($this->session->flashdata('error')): ?>
@@ -11,7 +16,7 @@
 
     <?php if (!$active_session): ?>
         <!-- Empty State: Belum Buka Stand -->
-        <div class="card border-0 bg-white shadow-sm rounded-4 text-center py-5 px-3">
+        <div class="card border-0 bg-white shadow-sm rounded-4 text-center py-5 px-3 mb-4">
             <i class="fas fa-store text-muted mb-3" style="font-size: 4rem;"></i>
             <h5 class="fw-bold">Stand Belum Dibuka</h5>
             <p class="text-muted small mb-4">Mulai sesi jualanmu dengan mengambil stok dari gudang (stok beku).</p>
@@ -21,19 +26,19 @@
         </div>
     <?php else: ?>
         <!-- State: Sedang Jualan -->
-        <div class="card border-0 bg-success bg-opacity-10 border-start border-4 border-success shadow-sm rounded-4 py-4 px-3 text-center mb-3">
+        <div class="card border-0 bg-success bg-opacity-10 border-start border-4 border-success shadow-sm rounded-4 py-4 px-3 text-center mb-4">
             <h5 class="fw-bold text-success mb-1">Stand Sedang Aktif</h5>
             <p class="text-success small mb-0">Kamu membawa stok dan siap melayani pembeli.</p>
         </div>
         <a href="<?= base_url('cashier/sales'); ?>" class="btn btn-primary-custom btn-lg rounded-pill fw-bold w-100 shadow-sm mb-3">
-            <i class="fas fa-shopping-cart me-2"></i> Buka Layar Kasir
+            <i class="fas fa-desktop me-2"></i> Buka Layar Kasir
         </a>
-        <a href="<?= base_url('cashier/close'); ?>" class="btn btn-light btn-lg text-danger rounded-pill fw-bold w-100">
-            Tutup Stand
+        <a href="<?= base_url('cashier/close'); ?>" class="btn btn-light btn-lg text-danger rounded-pill fw-bold w-100 shadow-sm">
+            <i class="fas fa-door-closed me-2"></i> Tutup Stand
         </a>
     <?php endif; ?>
 
-    <div class="mt-5 text-center">
+    <div class="mt-4 text-center">
         <a href="<?= base_url('logout'); ?>" class="text-muted text-decoration-none small">
             <i class="fas fa-sign-out-alt me-1"></i> Keluar Akun
         </a>

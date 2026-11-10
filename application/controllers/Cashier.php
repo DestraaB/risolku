@@ -2,6 +2,24 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cashier extends CI_Controller {
+public function index() {
+    $data['title'] = 'Dashboard Kasir - RisolKu';
+    
+    // --- TARIK DATA USER DARI DATABASE ---
+    $user_id = $this->session->userdata('user_id');
+    $this->db->where('id', $user_id);
+    $data['user'] = $this->db->get('users')->row_array(); // Ambil semua kolom termasuk stand_location
+
+    // --- TARIK STATUS STAND ---
+    $this->load->model('Stand_model');
+    $data['active_session'] = $this->Stand_model->get_active_session($user_id);
+
+    // --- LOAD TAMPILAN ---
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/navbar');
+    $this->load->view('cashier/dashboard', $data); // Pastikan ini load 'dashboard'
+    $this->load->view('templates/footer');
+}
 
     public function __construct() {
         parent::__construct();

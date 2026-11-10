@@ -38,14 +38,15 @@ class Auth extends CI_Controller {
         if ($user) {
             // Cek password hash bcrypt
             if (password_verify($password, $user['password'])) {
-                $session_data = [
-                    'user_id' => $user['id'],
-                    'username' => $user['username'],
-                    'name' => $user['name'],
-                    'role' => $user['role']
-                ];
-                $this->session->set_userdata($session_data);
-                
+$data_session = [
+    'user_id'        => $user['id'],
+    'username'       => $user['username'],
+    'name'           => $user['name'],
+    'role'           => $user['role'],
+    'stand_location' => $user['stand_location'], // <--- TAMBAHKAN BARIS INI
+    'logged_in'      => TRUE
+];
+$this->session->set_userdata($data_session);                
                 // Arahkan ke dashboard masing-masing
                 $this->_redirect_by_role($user['role']);
             } else {
