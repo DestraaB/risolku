@@ -32,12 +32,13 @@ class Users extends CI_Controller {
         }
 
         $data = [
-            'name'     => $this->input->post('name', TRUE),
-            'username' => $username,
-            'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-            'role'     => 'kasir',
-            'phone'    => $this->input->post('phone', TRUE),
-            'status'   => 'active'
+            'name'           => $this->input->post('name', TRUE),
+            'username'       => $username,
+            'password'       => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
+            'role'           => 'kasir',
+            'phone'          => $this->input->post('phone', TRUE),
+            'stand_location' => $this->input->post('stand_location', TRUE), // <--- TAMBAHAN INI
+            'status'         => 'active'
         ];
 
         $this->User_model->add_cashier($data);
