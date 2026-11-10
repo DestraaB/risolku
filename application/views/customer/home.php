@@ -79,3 +79,28 @@
         <?php endforeach; ?>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tombol Plus
+    const plusBtns = document.querySelectorAll('.btn-plus');
+    plusBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Hanya cari input yang berada persis di sebelah tombol ini
+            const input = this.previousElementSibling;
+            input.value = parseInt(input.value) + 1;
+        });
+    });
+
+    // Tombol Minus
+    const minusBtns = document.querySelectorAll('.btn-minus');
+    minusBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Hanya cari input yang berada persis di sebelah tombol ini
+            const input = this.nextElementSibling;
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        });
+    });
+});
+</script>
