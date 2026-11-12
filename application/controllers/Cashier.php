@@ -112,4 +112,39 @@ public function index() {
         
         redirect('cashier/sales');
     }
+    // --- FITUR PESANAN MASUK (ONLINE) UNTUK KASIR ---
+        public function orders() {
+            $data['title'] = 'Pesanan Masuk - RisolKu';
+            
+            // Ambil pesanan online yang masuk hari ini
+            $this->db->select('orders.*, customers.name, customers.phone');
+            $this->db->from('orders');
+            $this->db->join('customers', 'customers.id = orders.customer_id');
+            $this->db->where('orders.order_type', 'online');
+            $this->db->where('DATE(orders.created_at)', date('Y-m-d'));
+            // Urutkan dari pesanan yang belum selesai (pending/processing) ke atas
+            $this->db->order_by("FIELD(orders.order_status, 'pending', 'confirmed', 'processing', 'ready', 'completed', 'cancelled')");
+            $this->db->order_by('orders.created_at', 'DESC');
+            $data['orders'] = $this->db->get()->result_array();
+
+            // Ambil rincian item untuk tiap pesanan
+            $this->load->model('Order_model');
+            foreach ($data['orders'] as &$order) {
+                $order['items'] = $this->Order_model->get_order_items($order['id']);
+            }
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/navbar');
+            $this->load->view('cashier/orders', $data);
+            $this->load->view('templates/footer');
+        }
+
+        // --- FUNGSI TOMBOL 1-KLIK (UPDATE STATUS) ---
+        public function update_order_status($order_id, $new_status) {
+            $this->db->where('id', $order_id);
+            $this->db->update('orders', ['order_status' => $new_status]);
+            
+            $this->session->set_flashdata('success', 'Status pesanan berhasil diperbarui!');
+            redirect('cashier/orders');
+        }
 }

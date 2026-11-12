@@ -50,6 +50,8 @@
             </select>
         </div>
 
+        <div style="height: 100px;"></div> <!-- Spacing agar tombol tidak menutupi form -->
+
         <!-- Sticky Bawah -->
         <div class="fixed-bottom p-3 bg-white border-top shadow-lg" style="bottom: 70px; z-index: 1030;">
             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -63,8 +65,37 @@
     </form>
 </div>
 
-<!-- Script simpel untuk menampilkan/menyembunyikan form alamat -->
+<!-- ================= MODAL QRIS E-WALLET (Sebelumnya Terlewat) ================= -->
+<div class="modal fade" id="qrisModal" tabindex="-1" aria-labelledby="qrisModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="qrisModalLabel">Instruksi Pembayaran</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pt-2">
+                <p class="text-muted small mb-3">Silakan <b>scan</b> kode QR di bawah ini menggunakan aplikasi DANA, GoPay, OVO, atau m-Banking Anda.</p>
+                
+                <img src="<?= base_url('assets/img/dummy-qris.jpg'); ?>" alt="QRIS RisolKu" class="img-fluid border rounded-4 p-2 shadow-sm mb-3" style="max-width: 200px;">
+                
+                <div class="bg-light p-3 rounded-4 mb-3 text-start">
+                    <span class="d-block small text-muted">Atau transfer manual ke rekening:</span>
+                    <strong class="d-block fs-6 text-dark">BCA 1234567890 a/n RisolKu</strong>
+                </div>
+                
+                <p class="small text-danger fw-bold mb-0">Pesanan baru akan diproses setelah kasir menerima dana masuk.</p>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-brand w-100 rounded-pill fw-bold text-white shadow-sm" data-bs-dismiss="modal">Saya Mengerti</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tampilkan Form Alamat Jika Pilih Delivery
     document.getElementById('pickupMethod').addEventListener('change', function() {
         var addressBox = document.getElementById('addressBox');
         if (this.value === 'delivery') {
@@ -75,4 +106,16 @@
             addressBox.querySelector('textarea').required = false;
         }
     });
+
+    // Trigger Modal E-Wallet
+    const paymentSelect = document.querySelector('select[name="payment_method"]');
+    if(paymentSelect) {
+        paymentSelect.addEventListener('change', function() {
+            if (this.value === 'transfer') {
+                var myModal = new bootstrap.Modal(document.getElementById('qrisModal'));
+                myModal.show();
+            }
+        });
+    }
+});
 </script>
