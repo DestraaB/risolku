@@ -15,6 +15,17 @@ class Checkout extends CI_Controller {
     }
 
     public function index() {
+        // --- 1. VALIDASI STAND BUKA/TUTUP (HARUS DI PALING ATAS) ---
+        $this->load->model('Stand_model');
+        $active_stands = $this->Stand_model->get_active_stands(); 
+        
+        if (empty($active_stands)) {
+            $this->session->set_flashdata('error', 'Maaf, semua cabang RisolKu sedang TUTUP saat ini. Silakan coba lagi besok.');
+            redirect('cart');
+            return;
+        }
+        // -----------------------------------------------------------
+
         $data['title'] = 'Checkout - RisolKu';
         
         $this->load->view('templates/customer_header', $data);
@@ -38,14 +49,30 @@ class Checkout extends CI_Controller {
             'pickup_method' => $this->input->post('pickup_method', TRUE),
             'address'       => $customer_data['address'],
             'subtotal'      => $this->cart->total(),
-            'total_amount'  => $this->cart->total(), // (Tambahan ongkir bisa dipisah nanti jika ada)
+            'total_amount'  => $this->cart->total(),
             'payment_method'=> $this->input->post('payment_method', TRUE),
             'notes'         => $this->input->post('notes', TRUE)
         ];
 
         $cart_items = $this->cart->contents();
 
+        // Jika pesanan berhasil masuk ke database...
         if ($this->Order_model->create_order($customer_data, $order_data, $cart_items)) {
+            
+            // --- 2. SIMPAN RIWAYAT PESANAN KE SESSION CUSTOMER ---
+            $my_orders = $this->session->userdata('my_orders') ?? [];
+            
+            // Masukkan pesanan terbaru ke urutan paling atas
+            array_unshift($my_orders, [
+                'order_number' => $order_number,
+                'date'         => date('d M Y H:i'),
+                'total'        => $order_data['total_amount']
+            ]);
+
+            $this->session->set_userdata('customer_phone', $customer_data['phone']);
+            $this->session->set_userdata('my_orders', $my_orders);
+            // ------------------------------------------------------
+
             $this->cart->destroy(); // Kosongkan keranjang
             redirect('checkout/success/' . $order_number);
         } else {

@@ -119,4 +119,9 @@ class Stand_model extends CI_Model {
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
+    public function get_active_stands() {
+    // Mencari sesi stand yang statusnya masih 'open'
+    $this->db->where('status', 'open');
+    return $this->db->get('stand_sessions')->result_array();
+}
 }

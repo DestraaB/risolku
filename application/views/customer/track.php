@@ -1,4 +1,32 @@
 <div class="container-fluid py-4 px-3 mb-5">
+    <!-- DAFTAR RIWAYAT PESANAN SAYA (Otomatis dari Session) -->
+<?php $my_orders = $this->session->userdata('my_orders'); ?>
+<?php if (!empty($my_orders)): ?>
+    <div class="card border-0 shadow-sm rounded-4 mb-4 border-start border-4 border-primary bg-primary bg-opacity-10">
+        <div class="card-body p-3">
+            <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-history me-1"></i> Pesanan Terakhir Saya</h6>
+            <div class="list-group list-group-flush rounded-3 overflow-hidden shadow-sm">
+                <?php foreach ($my_orders as $ord): ?>
+                    <form action="<?= base_url('track'); ?>" method="post" class="list-group-item list-group-item-action border-0 px-3 py-3 d-flex justify-content-between align-items-center mb-1">
+                        <input type="hidden" name="order_number" value="<?= $ord['order_number']; ?>">
+                        <input type="hidden" name="phone" value="<?= $this->session->userdata('customer_phone') ?? ''; ?>">
+                        
+                        <div>
+                            <span class="fw-bold text-dark d-block" style="font-size: 0.9rem;"><?= $ord['order_number']; ?></span>
+                            <small class="text-muted" style="font-size: 0.8rem;"><i class="far fa-clock me-1"></i><?= $ord['date']; ?> • <b class="text-brand">Rp<?= number_format($ord['total'], 0, ',', '.'); ?></b></small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-sm btn-primary rounded-pill fw-bold shadow-sm" style="font-size: 0.8rem;">
+                            Cek <i class="fas fa-chevron-right ms-1"></i>
+                        </button>
+                    </form>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<!-- AKHIR DAFTAR RIWAYAT -->
     <h5 class="fw-bold mb-4">Lacak Pesanan</h5>
 
     <?php if ($this->session->flashdata('error')): ?>

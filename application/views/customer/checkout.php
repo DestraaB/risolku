@@ -1,4 +1,5 @@
 <div class="container-fluid py-4 px-3 mb-5">
+    
     <div class="d-flex align-items-center mb-4">
         <a href="<?= base_url('cart'); ?>" class="text-dark me-3"><i class="fas fa-arrow-left fs-4"></i></a>
         <h5 class="fw-bold mb-0">Checkout</h5>
