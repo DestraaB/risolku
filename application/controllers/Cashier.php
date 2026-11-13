@@ -72,6 +72,44 @@ public function index() {
             redirect('cashier/open');
         }
     }
+ 
+    // --- FITUR TUTUP STAND & REKAP ---
+    public function close() {
+        $data['title'] = 'Tutup Stand - RisolKu';
+        $user_id = $this->session->userdata('user_id');
+
+        $this->load->model('Stand_model');
+        $data['active_session'] = $this->Stand_model->get_active_session($user_id);
+
+        if (!$data['active_session']) {
+            $this->session->set_flashdata('error', 'Stand sudah ditutup atau belum dibuka.');
+            redirect('cashier');
+        }
+
+        // Hitung uang masuk
+        $data['sales'] = $this->Stand_model->get_sales_summary($data['active_session']['id']);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/navbar');
+        $this->load->view('cashier/close', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function process_close() {
+        $user_id = $this->session->userdata('user_id');
+        $this->load->model('Stand_model');
+        $active_session = $this->Stand_model->get_active_session($user_id);
+
+        if ($active_session) {
+            $actual_cash = str_replace('.', '', $this->input->post('actual_cash', TRUE)); // Hapus titik ribuan
+            $notes = $this->input->post('closing_notes', TRUE);
+            
+            $this->Stand_model->close_session($active_session['id'], $actual_cash, $notes);
+            
+            $this->session->set_flashdata('success', 'Stand berhasil ditutup! Terima kasih atas kerja keras hari ini.');
+        }
+        redirect('cashier');
+    }
 
     public function sales() {
         $data['title'] = 'Penjualan - RisolKu';

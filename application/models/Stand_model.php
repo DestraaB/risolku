@@ -119,9 +119,49 @@ class Stand_model extends CI_Model {
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
+    // Menghitung total penjualan (Cash & Transfer) berdasarkan rentang waktu Buka Stand
+    public function get_sales_summary($session_id) {
+        // 1. Ambil data sesi untuk mengetahui jam berapa stand ini mulai dibuka
+        $session = $this->db->get_where('stand_sessions', ['id' => $session_id])->row_array();
+        
+        $this->db->select('payment_method, SUM(total_amount) as total');
+        
+        // 2. Hitung pesanan yang terjadi SETELAH stand dibuka hari ini
+        $this->db->where('created_at >=', $session['opened_at']);
+        $this->db->where_in('order_status', ['completed', 'ready']); // Hanya pesanan yang sukses/selesai
+        $this->db->group_by('payment_method');
+        $result = $this->db->get('orders')->result_array();
+
+        $summary = ['cash' => 0, 'transfer' => 0, 'total' => 0];
+        foreach ($result as $row) {
+            // Gabungkan e-wallet dan transfer ke dalam 'transfer'
+            if ($row['payment_method'] == 'cash') {
+                $summary['cash'] = $row['total'];
+            } else {
+                $summary['transfer'] += $row['total'];
+            }
+            
+            $summary['total'] += $row['total'];
+        }
+        return $summary;
+    }
+    // --- EKSEKUSI PENUTUPAN STAND ---
+    public function close_session($session_id, $actual_cash, $notes) {
+        $data = [
+            'status'        => 'closed',
+            'closed_at'     => date('Y-m-d H:i:s'),
+            'actual_cash'   => $actual_cash,
+            'closing_notes' => $notes
+        ];
+        
+        $this->db->where('id', $session_id);
+        return $this->db->update('stand_sessions', $data);
+    }
+        // --- FUNGSI UNTUK CHECKOUT PELANGGAN (Tahap 2) ---
     public function get_active_stands() {
-    // Mencari sesi stand yang statusnya masih 'open'
-    $this->db->where('status', 'open');
-    return $this->db->get('stand_sessions')->result_array();
-}
+        // Mencari sesi stand yang statusnya masih 'open'
+        $this->db->where('status', 'open');
+        return $this->db->get('stand_sessions')->result_array();
+    }
+
 }

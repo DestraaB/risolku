@@ -74,3 +74,7 @@ $route['admin/stok-stand'] = 'stock/stand';
 $route['cashier/process_sale'] = 'cashier/process_sale';
 $route['track'] = 'track/index';
 $route['cashier'] = 'cashier/index';
+$route['cashier/orders'] = 'cashier/orders';                               
+$route['cashier/update_order_status/(:any)/(:any)'] = 'cashier/update_order_status/$1/$2'; 
+$route['cashier/close'] = 'cashier/close';                              
+$route['cashier/process_close'] = 'cashier/process_close';                 
